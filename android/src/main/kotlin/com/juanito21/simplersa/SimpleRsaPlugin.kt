@@ -256,7 +256,7 @@ class SimpleRsaPlugin() : MethodCallHandler {
             privateSignature.initSign(loadPrivateKey(privateKey))
             privateSignature.update(plainText.toByteArray())
             val signature = privateSignature.sign()
-            return Base64.encodeToString(signature, Base64.DEFAULT)
+            return Base64.encodeToString(signature, Base64.NO_WRAP)
         } catch (e: Exception) {
             throw Exception(e.toString())
         }
@@ -281,7 +281,7 @@ class SimpleRsaPlugin() : MethodCallHandler {
 
     private fun verifyDataRSA2(plainText: String, signature: String, publicKey: String): Boolean {
         try {
-            val publicBytes = Base64.decode(publicKey, Base64.DEFAULT)
+            val publicBytes = Base64.decode(publicKey, Base64.NO_WRAP)
             val keySpec = X509EncodedKeySpec(publicBytes)
             val keyFactory = KeyFactory.getInstance("RSA")
             val pubKey = keyFactory.generatePublic(keySpec)
@@ -289,7 +289,7 @@ class SimpleRsaPlugin() : MethodCallHandler {
             val publicSignature = Signature.getInstance("SHA256withRSA")
             publicSignature.initVerify(pubKey)
             publicSignature.update(plainText.toByteArray())
-            val signatureBytes = Base64.decode(signature, Base64.DEFAULT)
+            val signatureBytes = Base64.decode(signature, Base64.NO_WRAP)
             return publicSignature.verify(signatureBytes)
         } catch (e: Exception) {
             throw Exception(e.toString())
