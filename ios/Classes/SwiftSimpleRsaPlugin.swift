@@ -11,7 +11,6 @@ public class SwiftSimpleRsaPlugin: NSObject, FlutterPlugin {
 
 	public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
 		let argsMap : NSDictionary = call.arguments as! NSDictionary
-		print("this is my method" + call.method)
 		switch (call.method) {
 			case "encrypt":
 				let text : String = argsMap["txt"] as! String
